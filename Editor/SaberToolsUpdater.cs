@@ -1,0 +1,65 @@
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+using UnityEditor;
+using UnityEditor.PackageManager;
+using UnityEngine;
+
+[InitializeOnLoad]
+internal class SaberToolsUpdater
+{
+    public static Version RemoteVersion;
+    public static Version LocalVersion;
+
+    public static string RemoteVersionString = "0.0.0";
+    public static string LocalVersionString = "0.0.0";
+
+    public static bool IsUpdateAvailable;
+    public static bool IsUpdating;
+
+    static SaberToolsUpdater()
+    {
+        _ = CheckForUpdate();
+    }
+
+    public static async Task CheckForUpdate()
+    {
+        try
+        {
+            var packageStr = AssetDatabase.LoadAssetAtPath<TextAsset>("Packages/com.tonimacaroni.sabertoolkit/package.json");
+            var localData = JsonUtility.FromJson<PackageInfo>(packageStr.text);
+            LocalVersion = Version.Parse(localData.version);
+            LocalVersionString = LocalVersion.ToString();
+
+            var client = new WebClient();
+            var content =
+                await client.DownloadStringTaskAsync(
+                    "https://raw.githubusercontent.com/ToniMacaroni/SaberToolkit/main/package.json");
+            var data = JsonUtility.FromJson<PackageInfo>(content);
+            RemoteVersion = Version.Parse(data.version);
+            RemoteVersionString = RemoteVersion.ToString();
+
+            IsUpdateAvailable = LocalVersion.CompareTo(RemoteVersion) < 0;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            Debug.LogWarning("Couldn't check for SaberTools update");
+        }
+    }
+
+    public static void Update()
+    {
+        if (!IsUpdateAvailable)
+        {
+            return;
+        }
+
+        Client.Add("com.tonimacaroni.sabertoolkit");
+    }
+
+    internal class PackageInfo
+    {
+        public string version;
+    }
+}
