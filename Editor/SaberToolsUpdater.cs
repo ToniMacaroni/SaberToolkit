@@ -66,6 +66,8 @@ internal class SaberToolsUpdater
         Debug.Log("Completed");
         Debug.Log("Update " + (addReq.Status==StatusCode.Success?"Success":"Failure"));
 
+        await Task.Delay(3000);
+
         IsUpdating = false;
         await CheckForUpdate();
     }
