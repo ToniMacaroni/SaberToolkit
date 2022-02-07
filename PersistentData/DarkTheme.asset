@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58292639ec736c48a9f9696970307b3, type: 3}
+  m_Name: DarkTheme
+  m_EditorClassIdentifier: 
+  Name: Dark
+  BackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  HeaderColor: {r: 1, g: 0, b: 0.8499999, a: 1}
+  WarningColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  ErrorColor: {r: 1, g: 0, b: 0, a: 1}
+  SuccessColor: {r: 0, g: 1, b: 0, a: 1}

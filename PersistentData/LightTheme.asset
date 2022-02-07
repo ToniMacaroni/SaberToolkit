@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58292639ec736c48a9f9696970307b3, type: 3}
+  m_Name: LightTheme
+  m_EditorClassIdentifier: 
+  Name: Light
+  BackgroundColor: {r: 0.951, g: 0.9793932, b: 1, a: 1}
+  HeaderColor: {r: 0.8962264, g: 0.21137418, b: 0.7293295, a: 1}
+  WarningColor: {r: 0.97199994, g: 0.9357012, b: 0.5404481, a: 1}
+  ErrorColor: {r: 1, g: 0.416, b: 0.416, a: 1}
+  SuccessColor: {r: 0.572542, g: 0.934, b: 0.572542, a: 1}
