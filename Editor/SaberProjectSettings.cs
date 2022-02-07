@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SaberProjectSettings : ScriptableObject
 {
-    public const string SettingsPath = "Assets/SaberToolkit/PersistentData/SaberProjectSettings.asset";
+    public const string SettingsPath = "Assets/_SaberToolkitData/SaberProjectSettings.asset";
 
     [SerializeField] public string BeatSaberPath;
     [SerializeField] public string Author;
@@ -31,6 +31,7 @@ public class SaberProjectSettings : ScriptableObject
         var settings = AssetDatabase.LoadAssetAtPath<SaberProjectSettings>(SettingsPath);
         if (settings == null)
         {
+            Directory.CreateDirectory(Path.Combine(Application.dataPath, SettingsPath.Substring(7)));
             settings = CreateInstance<SaberProjectSettings>();
             AssetDatabase.CreateAsset(settings, SettingsPath);
             AssetDatabase.SaveAssets();
