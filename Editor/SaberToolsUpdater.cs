@@ -48,14 +48,26 @@ internal class SaberToolsUpdater
         }
     }
 
-    public static void Update()
+    public static async Task Update()
     {
-        if (!IsUpdateAvailable)
+        if (!IsUpdateAvailable || IsUpdating)
         {
             return;
         }
 
-        Client.Add("com.tonimacaroni.sabertoolkit");
+        IsUpdating = true;
+        Debug.Log("Updating ...");
+        var addReq = Client.Add("https://github.com/ToniMacaroni/SaberToolkit.git");
+        while (!addReq.IsCompleted)
+        {
+            await Task.Delay(100);
+        }
+
+        Debug.Log("Completed");
+        Debug.Log("Update " + (addReq.Status==StatusCode.Success?"Success":"Failure"));
+
+        IsUpdating = false;
+        await CheckForUpdate();
     }
 
     internal class PackageInfo

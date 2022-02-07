@@ -48,10 +48,19 @@ public class SaberProjectOverlay
         }
         GUILayout.BeginHorizontal("box");
         GUI.color = Color.white;
-        GUILayout.Label("Saber Project v0.1");
+        GUILayout.Label("Saber Project v" + SaberToolsUpdater.LocalVersionString);
         GUILayout.Space(5);
         var blk = new Color(1, 1, 1, 0.4f);
         GUI.color = blk;
+
+        if (SaberToolsUpdater.IsUpdateAvailable && !SaberToolsUpdater.IsUpdating)
+        {
+            if (GUILayout.Button("Update"))
+            {
+                _ = SaberToolsUpdater.Update();
+            }
+        }
+
         if (GUILayout.Button("Settings"))
         {
             SaberProjectSettings.OpenSettingsScreen();
