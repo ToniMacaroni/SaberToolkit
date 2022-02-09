@@ -22,8 +22,14 @@ internal class SaberToolsUpdater
         _ = CheckForUpdate();
     }
 
-    public static async Task CheckForUpdate()
+    public static async Task CheckForUpdate(int numTries = 0)
     {
+        if (numTries > 2)
+        {
+            Debug.LogWarning("Giving up on checking for SaberToolkit update");
+            return;
+        }
+
         try
         {
             var packageStr = AssetDatabase.LoadAssetAtPath<TextAsset>("Packages/com.tonimacaroni.sabertoolkit/package.json");
@@ -44,7 +50,9 @@ internal class SaberToolsUpdater
         catch (Exception e)
         {
             Debug.Log(e);
-            Debug.LogWarning("Couldn't check for SaberTools update");
+            Debug.LogWarning("Couldn't check for SaberToolkit update\nTrying again");
+            await Task.Delay(1000);
+            await CheckForUpdate(numTries + 1);
         }
     }
 
