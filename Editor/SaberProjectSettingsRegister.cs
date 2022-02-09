@@ -40,6 +40,14 @@ static class SaberProjectSettingsRegister
                 DrawProp(settings, nameof(SaberProjectSettings.AdditionalLaunchArguments), "Additional launch arguments");
                 EditorGUILayout.EndVertical();
 
+                GUILayout.Space(10);
+                GUILayout.Label("Project version " + SaberToolsUpdater.LocalVersion);
+                GUILayout.Space(2);
+                if (GUILayout.Button("Force Update"))
+                {
+                    _ = SaberToolsUpdater.Update(true);
+                }
+
                 settings.ApplyModifiedProperties();
             },
 

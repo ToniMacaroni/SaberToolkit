@@ -48,9 +48,9 @@ internal class SaberToolsUpdater
         }
     }
 
-    public static async Task Update()
+    public static async Task Update(bool force = false)
     {
-        if (!IsUpdateAvailable || IsUpdating)
+        if (!force && (!IsUpdateAvailable || IsUpdating))
         {
             return;
         }
