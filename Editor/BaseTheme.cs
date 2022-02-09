@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseTheme : ScriptableObject
 {
-    private const string ThemeBasePath = "Packages/com.tonimacaroni.sabertoolkit/PersistentData/";
+    private const string ThemeBasePath = "Packages/com.factorycore.tonimacaroni.sabertoolkit/PersistentData/";
 
     public string Name;
 

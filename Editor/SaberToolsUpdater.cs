@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using UnityEditor;
@@ -32,20 +34,26 @@ internal class SaberToolsUpdater
 
         try
         {
-            var packageStr = AssetDatabase.LoadAssetAtPath<TextAsset>("Packages/com.tonimacaroni.sabertoolkit/package.json");
-            var localData = JsonUtility.FromJson<PackageInfo>(packageStr.text);
-            LocalVersion = Version.Parse(localData.version);
-            LocalVersionString = LocalVersion.ToString();
+            var package = await GetLocalPackage();
+            if (package != null)
+            {
+                LocalVersion = Version.Parse(package.version);
+                LocalVersionString = package.version;
+                Debug.Log($"Got local {LocalVersionString}");
+            }
 
-            var client = new WebClient();
-            var content =
-                await client.DownloadStringTaskAsync(
-                    "https://raw.githubusercontent.com/ToniMacaroni/SaberToolkit/main/package.json");
-            var data = JsonUtility.FromJson<PackageInfo>(content);
-            RemoteVersion = Version.Parse(data.version);
-            RemoteVersionString = RemoteVersion.ToString();
+            var remotePackage = await GetRemotePackage();
+            if (remotePackage != null)
+            {
+                RemoteVersion = Version.Parse(remotePackage.version);
+                RemoteVersionString = RemoteVersion.ToString();
+                Debug.Log($"Got remote {RemoteVersionString}");
+            }
 
-            IsUpdateAvailable = LocalVersion.CompareTo(RemoteVersion) < 0;
+            if (LocalVersion != null && RemoteVersion != null)
+            {
+                IsUpdateAvailable = LocalVersion.CompareTo(RemoteVersion) < 0;
+            }
         }
         catch (Exception e)
         {
@@ -56,16 +64,54 @@ internal class SaberToolsUpdater
         }
     }
 
+    public static async Task<UnityEditor.PackageManager.PackageInfo> GetRemotePackage()
+    {
+        var seRe = Client.Search(SaberProjectSettings.SaberProjectDomain);
+        while (!seRe.IsCompleted)
+        {
+            await Task.Delay(100);
+        }
+
+        if (seRe.Status == StatusCode.Failure)
+        {
+            Debug.LogWarning("Error getting sabertoolkit package");
+            Debug.LogWarning(seRe.Error.message);
+            return null;
+        }
+
+        return seRe.Result[0];
+    }
+
+    public static async Task<UnityEditor.PackageManager.PackageInfo> GetLocalPackage()
+    {
+        var liRe = Client.List();
+        while (!liRe.IsCompleted)
+        {
+            await Task.Delay(100);
+        }
+
+        if (liRe.Status == StatusCode.Failure)
+        {
+            Debug.LogWarning("Error getting sabertoolkit package");
+            Debug.LogWarning(liRe.Error.message);
+            return null;
+        }
+
+        var package = liRe.Result.First(x => x.name == SaberProjectSettings.SaberProjectDomain);
+
+
+        return package;
+    }
+
     public static async Task Update(bool force = false)
     {
         if (!force && (!IsUpdateAvailable || IsUpdating))
         {
             return;
         }
-
         IsUpdating = true;
         Debug.Log("Updating ...");
-        var addReq = Client.Add("https://github.com/ToniMacaroni/SaberToolkit.git");
+        var addReq = Client.Add(SaberProjectSettings.SaberProjectDomain);
         while (!addReq.IsCompleted)
         {
             await Task.Delay(100);
@@ -84,10 +130,5 @@ internal class SaberToolsUpdater
 
         IsUpdating = false;
         await CheckForUpdate();
-    }
-
-    internal class PackageInfo
-    {
-        public string version;
     }
 }
