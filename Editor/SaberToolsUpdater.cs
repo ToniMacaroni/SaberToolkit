@@ -39,7 +39,6 @@ internal class SaberToolsUpdater
             {
                 LocalVersion = Version.Parse(package.version);
                 LocalVersionString = package.version;
-                Debug.Log($"Got local {LocalVersionString}");
             }
 
             var remotePackage = await GetRemotePackage();
@@ -47,7 +46,6 @@ internal class SaberToolsUpdater
             {
                 RemoteVersion = Version.Parse(remotePackage.version);
                 RemoteVersionString = RemoteVersion.ToString();
-                Debug.Log($"Got remote {RemoteVersionString}");
             }
 
             if (LocalVersion != null && RemoteVersion != null)
