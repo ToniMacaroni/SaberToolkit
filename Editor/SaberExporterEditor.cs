@@ -337,6 +337,12 @@ public class SaberExporterEditor : EditorWindow
 
             var rightSaber = Instantiate(LeftSaber, LeftSaber.parent, false);
             rightSaber.name = "RightSaber";
+
+            // mirror the saber
+            var scale = rightSaber.localScale;
+            scale.x *= -1;
+            rightSaber.localScale = scale;
+
             foreach (var trail in rightSaber.GetComponentsInChildren<CustomTrail>())
             {
                 trail.colorType = ColorType.RightSaber;
