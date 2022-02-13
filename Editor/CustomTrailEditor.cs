@@ -22,7 +22,7 @@ public class CustomTrailEditor : Editor
     [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
     private static void DrawGizmo(CustomTrail trail, GizmoType gizmoType)
     {
-        if (!SaberTools.ShowTrailPreview)
+        if (!SaberTools.Instance || !SaberTools.Instance.ShowTrailPreview)
         {
             return;
         }
@@ -39,7 +39,7 @@ public class CustomTrailEditor : Editor
         var mesh = new Mesh();
         mesh.name = "TrailPreviewMesh";
 
-        var offsetVec = new Vector3(SaberTools.TrailPreviewLength, 0, 0);
+        var offsetVec = new Vector3(SaberTools.Instance?SaberTools.Instance.TrailPreviewLength:0.5f, 0, 0);
 
         mesh.vertices = new[]
         {
@@ -58,7 +58,7 @@ public class CustomTrailEditor : Editor
             new Vector2(0, 1)
         };
 
-        if (SaberTools.PreviewCC)
+        if (SaberTools.Instance && SaberTools.Instance.PreviewCC)
         {
             var color = trail.name == "LeftSaber" ? SaberTools.CustomColorLeft : SaberTools.CustomColorRight;
             mesh.colors = new[] { color, color, color, color };

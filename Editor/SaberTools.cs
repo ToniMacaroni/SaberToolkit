@@ -9,15 +9,17 @@ using static DynamicBoneCollider;
 
 public class SaberTools : EditorWindow
 {
+    public static SaberTools Instance;
+
     public const float SaberLength = 1.179f;
     private const float SaberOffset = 0.1745f;
 
-    public static bool ShowSaberGuides = true;
-    public static bool ShowTrailGuides = true;
-    public static bool ShowTrailPreview = false;
-    public static float TrailPreviewLength = 0.5f;
-    public static bool PreviewCC = true;
-    public static bool BeatSaberLookActive;
+    public bool ShowSaberGuides = true;
+    public bool ShowTrailGuides = true;
+    public bool ShowTrailPreview = false;
+    public float TrailPreviewLength = 0.5f;
+    public bool PreviewCC = true;
+    public bool BeatSaberLookActive;
 
     public static Color CustomColorLeft = Color.red;
     public static Color CustomColorRight = Color.cyan;
@@ -47,7 +49,7 @@ public class SaberTools : EditorWindow
     [MenuItem("Window/Saber Project/Saber Tools")]
     public static void OpenSaberTools()
     {
-        GetWindow<SaberTools>(false, "Saber Tools");
+        Instance = GetWindow<SaberTools>(false, "Saber Tools");
     }
 
     public void OnGUI()
@@ -332,7 +334,7 @@ public class SaberTools : EditorWindow
     [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected)]
     private static void DrawGizmos(SaberDescriptor descriptor, GizmoType gizmoType)
     {
-        if (!ShowSaberGuides)
+        if (!Instance || !Instance.ShowSaberGuides)
         {
             return;
         }
@@ -365,7 +367,7 @@ public class SaberTools : EditorWindow
 
     private static void DrawTrailGizmo(CustomTrail trail, bool isLeft)
     {
-        if (!ShowTrailGuides)
+        if (!Instance || !Instance.ShowTrailGuides)
         {
             return;
         }
