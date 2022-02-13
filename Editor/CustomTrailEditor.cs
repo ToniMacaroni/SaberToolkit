@@ -60,7 +60,7 @@ public class CustomTrailEditor : Editor
 
         if (SaberTools.Instance && SaberTools.Instance.PreviewCC)
         {
-            var color = trail.name == "LeftSaber" ? SaberTools.CustomColorLeft : SaberTools.CustomColorRight;
+            var color = trail.name == "LeftSaber" ? SaberTools.Instance.CustomColorLeft : SaberTools.Instance.CustomColorRight;
             mesh.colors = new[] { color, color, color, color };
         }
 

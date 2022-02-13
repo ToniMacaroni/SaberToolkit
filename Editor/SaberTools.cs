@@ -20,8 +20,8 @@ public class SaberTools : EditorWindow
     public bool PreviewCC = true;
     public bool BeatSaberLookActive;
 
-    public static Color CustomColorLeft = Color.red;
-    public static Color CustomColorRight = Color.cyan;
+    public Color CustomColorLeft = Color.red;
+    public Color CustomColorRight = Color.cyan;
 
     private SaberProjectSettings _saberProjectSettings;
 
