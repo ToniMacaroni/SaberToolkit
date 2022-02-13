@@ -83,7 +83,7 @@ public class SaberProjectOverlay
 
             if (!_settings.IsSteamPathValid())
             {
-                _currentSceneview.ShowNotification(new GUIContent("Please set the steam path"), 1f);
+                ShowNotification("Please set the steam path");
             }
             else
             {
@@ -93,6 +93,12 @@ public class SaberProjectOverlay
 
         GUI.color = Color.white;
         GUILayout.EndHorizontal();
+    }
+
+    public static void ShowNotification(string text, float duration = 1f)
+    {
+        _currentSceneview.ShowNotification(new GUIContent(text), duration);
+        SceneView.RepaintAll();
     }
 
     private static void StartBeatSaber()

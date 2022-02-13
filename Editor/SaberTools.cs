@@ -5,7 +5,6 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static DynamicBoneCollider;
 
 public class SaberTools : EditorWindow
 {
@@ -196,6 +195,24 @@ public class SaberTools : EditorWindow
                 SelectTrailTransform(Selection.activeGameObject, true);
             }
             GUILayout.EndHorizontal();
+
+            Space(10);
+
+            if (UITools.Button("Create spinning anim", 23))
+            {
+                if (Selection.activeGameObject)
+                {
+                    var animCreator = AnimCreatorWindow.Open();
+                    animCreator.Setup(new AnimCreatorWindow.InitData
+                    {
+                        GameObject = Selection.activeGameObject
+                    });
+                }
+                else
+                {
+                    SaberProjectOverlay.ShowNotification("Select a gameobject first");
+                }
+            }
         }
         UITools.EndSection();
 

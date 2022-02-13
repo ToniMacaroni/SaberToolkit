@@ -4,6 +4,18 @@ using UnityEngine;
 
 public static class UITools
 {
+    public static GUIStyle SimplePadding;
+    public static GUIStyle BoxStyle;
+
+    static UITools()
+    {
+        BoxStyle = "box";
+        BoxStyle.padding = new RectOffset(10, 10, 10, 10);
+
+        SimplePadding = new GUIStyle();
+        SimplePadding.padding = new RectOffset(10, 10, 10, 10);
+    }
+
     public static void BeginSection(Color color)
     {
         GUIStyle box = "box";
