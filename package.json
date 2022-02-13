@@ -1,7 +1,7 @@
 {
     "name": "com.factorycore.tonimacaroni.sabertoolkit",
     "displayName": "SaberToolkit",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "unity": "2019.3",
     "description": "Toolkit for saber creation",
     "keywords": [ "sabers", "project" ],
